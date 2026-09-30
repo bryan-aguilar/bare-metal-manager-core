@@ -122,8 +122,20 @@ resources:
 ## a positive integer (validated at render).
 fileDescriptorLimit: 65536
 
-## Optional init containers (general-purpose pass-through)
+## Optional general-purpose init containers, rendered after bootArtifactContainers.
+## Set `image` or both non-empty `repository` and `tag`; repository + tag take
+## precedence when both are set, otherwise `image` is used. No image defaults
+## are inherited from global.image. The repository and tag fields are consumed
+## by the chart; all other Kubernetes container fields are passed through.
 initContainers: []
+# initContainers:
+#   - name: custom-init
+#     repository: <your-registry>/custom-init
+#     tag: v1.2.3
+#     command: ["sh", "-c", "echo initializing"]
+#   - name: image-init
+#     image: <your-registry>/custom-init:v1.2.3
+#     command: ["sh", "-c", "echo initializing"]
 
 ## Boot-artifact init containers
 ## Each entry is rendered as a Kubernetes init container with the boot-artifacts
